@@ -40,17 +40,18 @@ public class GlobeSortClient {
 	long start = System.currentTimeMillis();
         serverStub.ping(Empty.newBuilder().build());
 	long end = System.currentTimeMillis();
-        System.out.println("Ping successful. Latency is " + (start - end));
+        System.out.println("Ping successful. Latency is " + (end-start)/2);
 
         System.out.println("Requesting server to sort array");
         IntArray request = IntArray.newBuilder().addAllValues(Arrays.asList(values)).build();
 	start = System.currentTimeMillis();
         IntArray response = serverStub.sortIntegers(request);
 	end = System.currentTimeMillis();
-	System.out.println("Application throughput: " + ((end-start)/values.length));
-	System.out.println("Time spend in sorting" + response.getSortTime());
-	System.out.println("Sorting Throughput: " + response.getSortTime()/values.length);
-	System.out.println("One-way network throughput" + ((end-start)/values.length - response.getSortTime()/values.length/2));
+	System.out.println("Time spend travling and sorting: " + (end- start));
+	System.out.println("Application throughput: " + ((double)values.length)/(end-start));
+	System.out.println("Time spend in sorting: " + response.getSortTime());
+	System.out.println("Sorting Throughput: " +(double)values.length/response.getSortTime());
+	System.out.println("One-way network throughput" + ((double)values.length/((end-start) - response.getSortTime()))/2);
         System.out.println("Sorted array");
     }
 
