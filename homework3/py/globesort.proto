@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package globesort;
+
+service GlobeSort {
+  rpc Ping (Empty) returns (Empty) {}
+  rpc SortIntegers (IntArray) returns (IntArray) {}
+}
+
+message Empty { }
+
+message IntArray {
+  repeated int32 values = 1;
+}
